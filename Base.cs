@@ -18,9 +18,9 @@ namespace Rextester
 			BardeComp.Add("Chant", 1);
 			BardeComp.Add("Musique", 2);
 			List<Profession> Jobs = new List<Profession>	{ 
-																new Profession(157, "Barde", BardeComp),
-																new Profession(263, "Chasseur", new Dictionary<string, int> ())
-															};
+										new Profession(157, "Barde", BardeComp),
+										new Profession(263, "Chasseur", new Dictionary<string, int> ())
+									};
 			Character c = new Character("Elfe");
 			c.ApplyModificators();
 			c.ChooseQualityModificator("FO");
@@ -40,16 +40,16 @@ namespace Rextester
 			public People _Elf;
 			public List<Culture> ElfCult;
 			
-			public List<Quality> _Qualities = new List<Quality> { 
-																	new Quality("Force", "FO", "Orange"),
-																	new Quality("Courage", "CO", "Rouge"),
-																	new Quality("Intelligence", "IN", "Violet"),
-																	new Quality("Intuition", "IU", "Vert"),
-																	new Quality("Dextérité", "DE", "Jaune"),
-																	new Quality("Agilité", "AG", "Bleu"),
-																	new Quality("Charisme", "CH", "Noir"),
-																	new Quality("Constitution", "CN", "Blanc")
-																};
+			public List<Quality> _Qualities = new List<Quality>	{ 
+											new Quality("Force", "FO", "Orange"),
+											new Quality("Courage", "CO", "Rouge"),
+											new Quality("Intelligence", "IN", "Violet"),
+											new Quality("Intuition", "IU", "Vert"),
+											new Quality("Dextérité", "DE", "Jaune"),
+											new Quality("Agilité", "AG", "Bleu"),
+											new Quality("Charisme", "CH", "Noir"),
+											new Quality("Constitution", "CN", "Blanc")
+										};
 																	
 			public List<Quality> GetQualities()
 			{
@@ -72,10 +72,10 @@ namespace Rextester
 				ElfComp2.Add("Furtivité", 2);
 				ElfComp2.Add("Survie", 2);
 				ElfCult =  new List<Culture>	{
-													new Culture("Elf des Bois", 47, ElfComp1),
-													new Culture("Elf des Névés", 55, ElfComp2),
-													new Culture("Elf des Prairies", 43, ElfComp1)
-												};
+									new Culture("Elf des Bois", 47, ElfComp1),
+									new Culture("Elf des Névés", 55, ElfComp2),
+									new Culture("Elf des Prairies", 43, ElfComp1)
+								};
 				_Elf = new People ("Elf", 18, 2, -4, -6, 8, Elfenobli, Elfenchoo, ElfCult);			
 			}
 		}
