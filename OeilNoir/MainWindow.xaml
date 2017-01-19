@@ -1,9 +1,19 @@
 ﻿<Window x:Class="OeilNoir.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="L'Oeil Noir" Height="400" Width="600" Loaded="Window_Loaded" FontFamily="Times New Roman" FontSize="14">
+        Title="L'Oeil Noir" Height="720" Width="1024" Loaded="Window_Loaded" FontFamily="Times New Roman" FontSize="14">
     <Grid>
-        <Button Content="Créer un Personnage" HorizontalAlignment="Left" Margin="50,75,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="Button_Click" />
-
+        <Button x:Name="BtnCrea" Content="Créer un Personnage" HorizontalAlignment="Left" Margin="50,75,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnCrea_Click" />
+        <Button x:Name="BtnQual" Content="Qualités" HorizontalAlignment="Left" Margin="581,45,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnQual_Click" />
+        <Button x:Name="BtnCult" Content="Cultures" HorizontalAlignment="Left" Margin="706,45,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnCult_Click" />
+        <Button x:Name="BtnPeo" Content="Peuples" HorizontalAlignment="Left" Margin="611,75,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnPeo_Click" />
+        <ListView x:Name="Ltv" HorizontalAlignment="Right" Margin="0,120,9.6,10.4" Width="594">
+            <ListView.View>
+                <GridView>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ComboBox x:Name="CbLevel" HorizontalAlignment="Left" Margin="24,120,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden" SelectionChanged="CbLevel_SelectionChanged"/>
+        <ComboBox x:Name="CbPeople" HorizontalAlignment="Left" Margin="24,160,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden" SelectionChanged="CbPeople_SelectionChanged"/>
     </Grid>
 </Window>

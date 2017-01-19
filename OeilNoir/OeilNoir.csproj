@@ -54,9 +54,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Competence.cs" />
-    <Compile Include="CreaPerso.xaml.cs">
-      <DependentUpon>CreaPerso.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Quality.cs" />
     <Compile Include="DataResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -64,10 +61,6 @@
       <DependentUpon>DataResources.resx</DependentUpon>
     </Compile>
     <Compile Include="StartLevel.cs" />
-    <Page Include="CreaPerso.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -118,6 +111,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Qualities.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Peoples.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StartLevels.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Cultures.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

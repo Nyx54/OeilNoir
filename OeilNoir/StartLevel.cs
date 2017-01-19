@@ -8,6 +8,7 @@ namespace OeilNoir
 {
     public class StartLevel
     {
+        string _Name;
         int _Nb_PAV;
         int _Nb_Fight_Techniques;
         int _Nb_Qualities_Points;
@@ -18,6 +19,7 @@ namespace OeilNoir
 
         public StartLevel()
         {
+            this._Name = String.Empty;
             this._Nb_PAV = 0;
             this._Nb_Fight_Techniques = 0;
             this._Max_Value_Competence = 0;
@@ -27,8 +29,9 @@ namespace OeilNoir
             this._Nb_Spells_HT = 0;
         }
 
-        public StartLevel(int mpav, int mft, int mvc, int mvq, int nbqp, int nbs, int nbsht)
+        public StartLevel(int mpav, int mft, int mvc, int mvq, int nbqp, int nbs, int nbsht, string name)
         {
+            this._Name = name;
             this._Nb_PAV = mpav;
             this._Nb_Fight_Techniques = mft;
             this._Max_Value_Competence = mvc;
@@ -43,6 +46,14 @@ namespace OeilNoir
             if (this._Nb_PAV >= pav)
             {
                 this._Nb_PAV -= pav;
+            }
+        }
+
+        public string GetName
+        {
+            get
+            {
+                return this._Name;
             }
         }
 

@@ -29,9 +29,28 @@ namespace OeilNoir
             this._Color = color;
         }
 
-        public string GetSigle()
+        public string GetSigle
         {
-            return this._Sigle;
+            get
+            {
+                return this._Sigle;
+            }
+        }
+
+        public string GetName
+        {
+            get
+            {
+                return this._Name;
+            }
+        }
+
+        public string GetColor
+        {
+            get
+            {
+                return this._Color;
+            }
         }
 
         public void ModifyValue(int val)

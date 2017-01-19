@@ -8,7 +8,7 @@ namespace OeilNoir
 {
     public class Character : People
     {
-        StartLevel _CreationLevel = new StartLevel(1000, 10, 10, 13, 98, 10, 1);
+        StartLevel _CreationLevel;
         List<Quality> _Qualities;
         int _AT;
         int _PRD;
@@ -32,7 +32,7 @@ namespace OeilNoir
         List<Competence> _Competences;
 
         public Character()
-            : base("Humain")
+            : base()
         {
             this._Qualities = new List<Quality>();
             this._AT = 0;
@@ -55,12 +55,13 @@ namespace OeilNoir
             this._Current_Cultures = new List<Culture>();
             this._Job = new Profession();
             this._Competences = new List<Competence>();
+            this._CreationLevel = new StartLevel();
         }
 
-        public Character(string people)
+        public Character(People people, StartLevel lvl)
             : base(people)
         {
-            this._Qualities = new List<Quality> ();
+            this._Qualities = new List<Quality>();
             this._AT = 0;
             this._PRD = 0;
             this._CD = 0;
@@ -81,15 +82,15 @@ namespace OeilNoir
             this._Current_Cultures = new List<Culture>();
             this._Job = new Profession();
             this._Competences = new List<Competence>();
-
-            this._CreationLevel.UsePAV(base.GetCost());
+            this._CreationLevel = lvl;
+            this._CreationLevel.UsePAV(base.GetCost);
         }
 
         public int QualityIncreaseCost(string sigle)
         {
             for (int i = 0; i < this._Qualities.Count; i++)
             {
-                if (this._Qualities[i].GetSigle() == sigle)
+                if (this._Qualities[i].GetSigle == sigle)
                 {
                     if (this._Qualities[i].GetValue() < this._CreationLevel.GetMaxQualityValue())
                     {
@@ -104,7 +105,7 @@ namespace OeilNoir
         {
             for (int i = 0; i < this._Qualities.Count; i++)
             {
-                if (this._Qualities[i].GetSigle() == sigle)
+                if (this._Qualities[i].GetSigle == sigle)
                 {
                     if (this._Qualities[i].GetValue() < this._CreationLevel.GetMaxQualityValue())
                     {
@@ -117,11 +118,11 @@ namespace OeilNoir
 
         public void ApplyModificators()
         {
-            foreach (KeyValuePair<string, int> kvp in base.GetModificators())
+            foreach (KeyValuePair<string, int> kvp in base.GetModificators)
             {
                 for (int i = 0; i < this._Qualities.Count; i++)
                 {
-                    if (this._Qualities[i].GetSigle() == kvp.Key)
+                    if (this._Qualities[i].GetSigle == kvp.Key)
                     {
                         this._Qualities[i].ModifyValue(kvp.Value);
                     }
@@ -131,13 +132,13 @@ namespace OeilNoir
 
         public void ChooseQualityModificator(string sigle)
         {
-            if (base.GetChoosableModificators().ContainsKey(sigle))
+            if (base.GetChoosableModificators.ContainsKey(sigle))
             {
                 for (int i = 0; i < this._Qualities.Count; i++)
                 {
-                    if (this._Qualities[i].GetSigle() == sigle)
+                    if (this._Qualities[i].GetSigle == sigle)
                     {
-                        this._Qualities[i].ModifyValue(base.GetChoosableModificators()[sigle]);
+                        this._Qualities[i].ModifyValue(base.GetChoosableModificators[sigle]);
                     }
                 }
             }
@@ -146,16 +147,16 @@ namespace OeilNoir
 
         public void ChooseCulture(string culture)
         {
-            foreach (Culture cult in base.GetChoosableCultures())
+            foreach (Culture cult in base.GetChoosableCultures)
             {
-                if (cult.GetName() == culture)
+                if (cult.GetName == culture)
                 {
                     this._Current_Cultures.Add(cult);
                     if (this._Current_Cultures.Count > 1)
                     {
-                        this._CreationLevel.UsePAV(cult.GetCost());
+                        this._CreationLevel.UsePAV(cult.GetCost);
                     }
-                    foreach (KeyValuePair<string, int> kvp in cult.GetBaggage())
+                    foreach (KeyValuePair<string, int> kvp in cult.GetBaggage)
                     {
                         ModifyComp(kvp.Key, kvp.Value);
                     }
@@ -193,19 +194,19 @@ namespace OeilNoir
 
         public void BaseValues()
         {
-            this._EV = base.GetEV() + (2 * this.GetQualityValue("CN"));
-            this._TM = base.GetTM() + Convert.ToInt32(Math.Round((double)((this.GetQualityValue("CO") + this.GetQualityValue("IN") + this.GetQualityValue("IU")) / 6), 0));
-            this._TP = base.GetTP() + Convert.ToInt32(Math.Round((double)(((this.GetQualityValue("CN") * 2) + this.GetQualityValue("FO")) / 6), 0));
+            this._EV = base.GetEV + (2 * this.GetQualityValue("CN"));
+            this._TM = base.GetTM + Convert.ToInt32(Math.Round((double)((this.GetQualityValue("CO") + this.GetQualityValue("IN") + this.GetQualityValue("IU")) / 6), 0));
+            this._TP = base.GetTP + Convert.ToInt32(Math.Round((double)(((this.GetQualityValue("CN") * 2) + this.GetQualityValue("FO")) / 6), 0));
             this._Esquive = Convert.ToInt32(Math.Round((double)(this.GetQualityValue("AG") / 2)));
             this._Init = Convert.ToInt32(Math.Round((double)((this.GetQualityValue("CO") + this.GetQualityValue("AG")) / 2)));
-            this._VI = base.GetVI();
+            this._VI = base.GetVI;
         }
 
         protected int GetQualityValue(string sigle)
         {
             foreach (Quality q in this._Qualities)
             {
-                if (q.GetSigle() == sigle)
+                if (q.GetSigle == sigle)
                 {
                     return q.GetValue();
                 }
@@ -228,7 +229,7 @@ namespace OeilNoir
             string cult = String.Empty;
             foreach (Culture c in this._Current_Cultures)
             {
-                cult += (c.GetName() + "\t");
+                cult += (c.GetName + "\t");
             }
             string comp = String.Empty;
             foreach (Competence cp in this._Competences)
@@ -236,7 +237,7 @@ namespace OeilNoir
                 comp += (cp.ToString() + "\n");
             }
             return String.Format("{0}\t{14}\n{1}\t{11}\n{2} ans\tMain directrice: {3}\n{4}Energie Vitale: {5}\nTenacité Mentale: {6}\nTenacité Physique: {7}\nEsquive: {8}\nInitiative: {9}\nVitesse: {10}\n\n{12}\n\nPAV: {13}",
-                                    this._Name, base.GetName(), this._Age.ToString(), this._Leading_Hand, qual, this._EV.ToString(),
+                                    this._Name, base.GetName, this._Age.ToString(), this._Leading_Hand, qual, this._EV.ToString(),
                                     this._TM.ToString(), this._TP.ToString(), this._Esquive.ToString(), this._Init.ToString(), this._VI.ToString(),
                                     cult, comp, this._CreationLevel.GetPAV().ToString(), this._Job.GetName());
         }

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Cultures>
+  <Culture>
+    <Name>
+      Elfe des Bois
+    </Name>
+    <Pav>
+      47
+    </Pav>
+    <Competences>
+      <Competence>
+        <Name>
+          Chant
+        </Name>
+        <Value>
+          2
+        </Value>
+      </Competence>
+    </Competences>
+  </Culture>
+</Cultures>

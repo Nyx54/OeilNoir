@@ -18,9 +18,12 @@ namespace OeilNoir
         Dictionary<string, int> _Choosable_Qualities_Modificators;
         List<Culture> _Choosable_Cultures;
 
-        public string GetName()
+        public string GetName
         {
-            return this._Name;
+            get
+            {
+                return this._Name;
+            }
         }
 
         public People()
@@ -36,10 +39,17 @@ namespace OeilNoir
             this._Choosable_Cultures = new List<Culture>();
         }
 
-        public People(string name)
+        public People(People people)
         {
-            this._Name = name;
-            // Do Stuff 
+            this._PAV = people.GetCost;
+            this._EV = people.GetEV;
+            this._TM = people.GetTM;
+            this._TP = people.GetTP;
+            this._VI = people.GetVI;
+            this._Name = people.GetName;
+            this._Compulsory_Qualities_Modificators = people.GetModificators;
+            this._Choosable_Qualities_Modificators = people.GetChoosableModificators;
+            this._Choosable_Cultures = people.GetChoosableCultures;
         }
 
         public People(string name, int pav, int ev, int tm, int tp, int vi, Dictionary<string, int> cyqm, Dictionary<string, int> chqm, List<Culture> cults)
@@ -55,44 +65,68 @@ namespace OeilNoir
             this._Choosable_Cultures = cults;
         }
 
-        public int GetCost()
+        public int GetCost
         {
-            return this._PAV;
+            get
+            {
+                return this._PAV;
+            }
         }
 
-        public Dictionary<string, int> GetModificators()
+        public Dictionary<string, int> GetModificators
         {
-            return this._Compulsory_Qualities_Modificators;
+            get
+            {
+                return this._Compulsory_Qualities_Modificators;
+            }
         }
 
-        public Dictionary<string, int> GetChoosableModificators()
+        public Dictionary<string, int> GetChoosableModificators
         {
-            return this._Choosable_Qualities_Modificators;
+            get
+            {
+                return this._Choosable_Qualities_Modificators;
+            }
         }
 
-        public List<Culture> GetChoosableCultures()
+        public List<Culture> GetChoosableCultures
         {
-            return this._Choosable_Cultures;
+            get
+            {
+                return this._Choosable_Cultures;
+            }
         }
 
-        public int GetEV()
+        public int GetEV
         {
-            return this._EV;
+            get
+            {
+                return this._EV;
+            }
         }
 
-        public int GetTM()
+        public int GetTM
         {
-            return this._TM;
+            get
+            {
+                return this._TM;
+            }
         }
 
-        public int GetTP()
+        public int GetTP
         {
-            return this._TP;
+            get
+            {
+                return this._TP;
+            }
         }
 
-        public int GetVI()
+        public int GetVI
         {
-            return this._VI;
+            get
+            {
+                return this._VI;
+            }
         }
     }
 }

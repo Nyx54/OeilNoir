@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StartLevels>
+  <StartLevel>
+    <Pav>
+      1000
+    </Pav>
+    <Ft>
+      10
+    </Ft>
+    <MaxValComp>
+      10
+    </MaxValComp>
+    <MaxValQual>
+      13
+    </MaxValQual>
+    <Qp>
+      98
+    </Qp>
+    <Spells>
+      10
+    </Spells>
+    <SpellsHT>
+      1
+    </SpellsHT>
+    <Name>
+      Moyen
+    </Name>
+  </StartLevel>
+</StartLevels>

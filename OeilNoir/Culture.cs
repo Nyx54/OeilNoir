@@ -26,19 +26,45 @@ namespace OeilNoir
             this._Cultural_Baggage = comp;
         }
 
-        public int GetCost()
+        public int GetCost
         {
-            return this._PAV;
+            get
+            {
+                return this._PAV;
+            }
         }
 
-        public string GetName()
+        public string GetName
         {
-            return this._Name;
+            get
+            {
+                return this._Name;
+            }
         }
 
-        public Dictionary<string, int> GetBaggage()
+        public Dictionary<string, int> GetBaggage
         {
-            return this._Cultural_Baggage;
+            get
+            {
+                return this._Cultural_Baggage;
+            }
+        }
+
+        public string GetCulturalBaggage
+        {
+            get
+            {
+                string res = string.Empty;
+                foreach (KeyValuePair<string, int> kvp in this._Cultural_Baggage)
+                {
+                    if (!string.IsNullOrEmpty(res))
+                    {
+                        res += ", ";
+                    }
+                    res += string.Format("{0} +{1}", kvp.Key, kvp.Value.ToString());
+                }
+                return res;
+            }
         }
     }
 }
