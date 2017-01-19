@@ -46,7 +46,7 @@ namespace OeilNoir
                 {
                     StartLevel lvl = new StartLevel(Convert.ToInt32(rootlvl.ChildNodes[i].ChildNodes[0].InnerText), Convert.ToInt32(rootlvl.ChildNodes[i].ChildNodes[1].InnerText), Convert.ToInt32(rootlvl.ChildNodes[i].ChildNodes[2].InnerText),
                                                     Convert.ToInt32(rootlvl.ChildNodes[i].ChildNodes[3].InnerText), Convert.ToInt32(rootlvl.ChildNodes[i].ChildNodes[4].InnerText), Convert.ToInt32(rootlvl.ChildNodes[i].ChildNodes[5].InnerText),
-                                                    Convert.ToInt32(rootlvl.ChildNodes[i].ChildNodes[6].InnerText), rootlvl.ChildNodes[i].ChildNodes[7].InnerText);
+                                                    Convert.ToInt32(rootlvl.ChildNodes[i].ChildNodes[6].InnerText), rootlvl.ChildNodes[i].ChildNodes[7].InnerText.Trim());
                     _Levels.Add(lvl);
                 }
             }
@@ -62,7 +62,7 @@ namespace OeilNoir
             {
                 for (int i = 0; i < rootqual.ChildNodes.Count; i++)
                 {
-                    Quality q = new Quality(rootqual.ChildNodes[i].ChildNodes[0].InnerText, rootqual.ChildNodes[i].ChildNodes[1].InnerText, rootqual.ChildNodes[i].ChildNodes[2].InnerText);
+                    Quality q = new Quality(rootqual.ChildNodes[i].ChildNodes[0].InnerText.Trim(), rootqual.ChildNodes[i].ChildNodes[1].InnerText.Trim(), rootqual.ChildNodes[i].ChildNodes[2].InnerText.Trim());
                     _Qualities.Add(q);
                 }
             }
@@ -80,9 +80,9 @@ namespace OeilNoir
                     Dictionary<string, int> _comp = new Dictionary<string, int>();
                     for (int j = 0; j < rootcult.ChildNodes[i].ChildNodes[2].ChildNodes.Count; j++)
                     {
-                        _comp.Add(rootcult.ChildNodes[i].ChildNodes[2].ChildNodes[j].ChildNodes[0].InnerText, Convert.ToInt32(rootcult.ChildNodes[i].ChildNodes[2].ChildNodes[j].ChildNodes[1].InnerText));
+                        _comp.Add(rootcult.ChildNodes[i].ChildNodes[2].ChildNodes[j].ChildNodes[0].InnerText.Trim(), Convert.ToInt32(rootcult.ChildNodes[i].ChildNodes[2].ChildNodes[j].ChildNodes[1].InnerText));
                     }
-                    Culture c = new Culture(rootcult.ChildNodes[i].ChildNodes[0].InnerText, Convert.ToInt32(rootcult.ChildNodes[i].ChildNodes[1].InnerText), _comp);
+                    Culture c = new Culture(rootcult.ChildNodes[i].ChildNodes[0].InnerText.Trim(), Convert.ToInt32(rootcult.ChildNodes[i].ChildNodes[1].InnerText), _comp);
                     _Cultures.Add(c);
                 }
             }
@@ -100,15 +100,19 @@ namespace OeilNoir
                     Dictionary<string, int> _compqualities = new Dictionary<string, int>();
                     for (int j = 0; j < rootpeople.ChildNodes[i].ChildNodes[6].ChildNodes.Count; j++)
                     {
-                        _compqualities.Add(rootpeople.ChildNodes[i].ChildNodes[6].ChildNodes[j].ChildNodes[0].InnerText, Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[6].ChildNodes[j].ChildNodes[1].InnerText));
+                        _compqualities.Add(rootpeople.ChildNodes[i].ChildNodes[6].ChildNodes[j].ChildNodes[0].InnerText.Trim(), Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[6].ChildNodes[j].ChildNodes[1].InnerText));
                     }
                     Dictionary<string, int> _chosqualities = new Dictionary<string, int>();
                     for (int k = 0; k < rootpeople.ChildNodes[i].ChildNodes[7].ChildNodes.Count; k++)
                     {
-                        _chosqualities.Add(rootpeople.ChildNodes[i].ChildNodes[7].ChildNodes[k].ChildNodes[0].InnerText, Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[7].ChildNodes[k].ChildNodes[1].InnerText));
+                        _chosqualities.Add(rootpeople.ChildNodes[i].ChildNodes[7].ChildNodes[k].ChildNodes[0].InnerText.Trim(), Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[7].ChildNodes[k].ChildNodes[1].InnerText));
                     }
-                    List<Culture> _choscults = new List<Culture>();
-                    People p = new People(rootpeople.ChildNodes[i].ChildNodes[0].InnerText, Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[1].InnerText), Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[2].InnerText),
+                    List<string> _choscults = new List<string>();
+                    for (int l = 0; l < rootpeople.ChildNodes[i].ChildNodes[8].ChildNodes.Count; l++)
+                    {
+                        _choscults.Add(rootpeople.ChildNodes[i].ChildNodes[8].ChildNodes[l].InnerText.Trim());
+                    }
+                    People p = new People(rootpeople.ChildNodes[i].ChildNodes[0].InnerText.Trim(), Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[1].InnerText), Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[2].InnerText),
                         Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[3].InnerText), Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[4].InnerText), Convert.ToInt32(rootpeople.ChildNodes[i].ChildNodes[5].InnerText),
                         _compqualities, _chosqualities, _choscults);
                     _Peoples.Add(p);
@@ -238,6 +242,11 @@ namespace OeilNoir
                 while (_Levels[++j].GetName != CbLevel.SelectedValue.ToString()) ;
                 _Char = new Character(_Peoples[i], _Levels[j]);
                 _Char.ApplyModificators();
+                CbCulture.Visibility = Visibility.Visible;
+                for (int k = 0; k < _Char.GetChoosableCultures.Count; k++)
+                {
+                    CbCulture.Items.Add(_Char.GetChoosableCultures[k]);
+                }
             }
         }
 
@@ -280,6 +289,13 @@ namespace OeilNoir
             {
                 Ltv.Items.Add(c);
             }
+        }
+
+        private void CbCulture_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int i = -1;
+            while (_Cultures[++i].GetName != CbCulture.SelectedValue.ToString()) ;
+            _Char.ChooseCulture(_Cultures[i]);
         }
     }
 }

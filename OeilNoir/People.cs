@@ -16,7 +16,7 @@ namespace OeilNoir
         string _Name;
         Dictionary<string, int> _Compulsory_Qualities_Modificators;
         Dictionary<string, int> _Choosable_Qualities_Modificators;
-        List<Culture> _Choosable_Cultures;
+        List<string> _Choosable_Cultures;
 
         public string GetName
         {
@@ -36,7 +36,7 @@ namespace OeilNoir
             this._Name = String.Empty;
             this._Compulsory_Qualities_Modificators = new Dictionary<string, int>();
             this._Choosable_Qualities_Modificators = new Dictionary<string, int>();
-            this._Choosable_Cultures = new List<Culture>();
+            this._Choosable_Cultures = new List<string>();
         }
 
         public People(People people)
@@ -52,7 +52,7 @@ namespace OeilNoir
             this._Choosable_Cultures = people.GetChoosableCultures;
         }
 
-        public People(string name, int pav, int ev, int tm, int tp, int vi, Dictionary<string, int> cyqm, Dictionary<string, int> chqm, List<Culture> cults)
+        public People(string name, int pav, int ev, int tm, int tp, int vi, Dictionary<string, int> cyqm, Dictionary<string, int> chqm, List<string> cults)
         {
             this._Name = name;
             this._PAV = pav;
@@ -89,7 +89,7 @@ namespace OeilNoir
             }
         }
 
-        public List<Culture> GetChoosableCultures
+        public List<string> GetChoosableCultures
         {
             get
             {

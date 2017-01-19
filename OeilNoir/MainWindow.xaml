@@ -15,5 +15,6 @@
         </ListView>
         <ComboBox x:Name="CbLevel" HorizontalAlignment="Left" Margin="24,120,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden" SelectionChanged="CbLevel_SelectionChanged"/>
         <ComboBox x:Name="CbPeople" HorizontalAlignment="Left" Margin="24,160,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden" SelectionChanged="CbPeople_SelectionChanged"/>
+        <ComboBox x:Name="CbCulture" HorizontalAlignment="Left" Margin="24,200,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden" SelectionChanged="CbCulture_SelectionChanged"/>
     </Grid>
 </Window>

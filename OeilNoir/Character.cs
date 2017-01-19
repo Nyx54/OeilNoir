@@ -145,18 +145,18 @@ namespace OeilNoir
 
         }
 
-        public void ChooseCulture(string culture)
+        public void ChooseCulture(Culture culture)
         {
-            foreach (Culture cult in base.GetChoosableCultures)
+            foreach (string cult in base.GetChoosableCultures)
             {
-                if (cult.GetName == culture)
+                if (cult == culture.GetName)
                 {
-                    this._Current_Cultures.Add(cult);
+                    this._Current_Cultures.Add(culture);
                     if (this._Current_Cultures.Count > 1)
                     {
-                        this._CreationLevel.UsePAV(cult.GetCost);
+                        this._CreationLevel.UsePAV(culture.GetCost);
                     }
-                    foreach (KeyValuePair<string, int> kvp in cult.GetBaggage)
+                    foreach (KeyValuePair<string, int> kvp in culture.GetBaggage)
                     {
                         ModifyComp(kvp.Key, kvp.Value);
                     }
@@ -217,6 +217,20 @@ namespace OeilNoir
         public void ChooseName(string name)
         {
             this._Name = name;
+        }
+
+
+        public List<string> GetCurrentCultures
+        {
+            get
+            {
+                List<string> res = new List<string>();
+                foreach (Culture c in this._Current_Cultures)
+                {
+                    res.Add(c.GetName);
+                }
+                return res;
+            }
         }
 
         public override string ToString()
