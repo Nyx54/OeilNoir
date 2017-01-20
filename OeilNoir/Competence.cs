@@ -10,17 +10,20 @@ namespace OeilNoir
     {
         string _Name;
         int _Value;
+        char _Facteur_Amelioration;
 
         public Competence()
         {
             this._Name = String.Empty;
             this._Value = 0;
+            this._Facteur_Amelioration = '\0';
         }
 
-        public Competence(string comp, int val)
+        public Competence(string comp, int val, char fa)
         {
             this._Name = comp;
             this._Value = val;
+            this._Facteur_Amelioration = fa;
         }
 
         public string GetName()

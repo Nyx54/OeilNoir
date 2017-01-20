@@ -30,6 +30,8 @@ namespace OeilNoir
         List<Culture> _Current_Cultures;
         Profession _Job;
         List<Competence> _Competences;
+        List<Advantage> _Advantages;
+        List<Disadvantage> _Disadvantages;
 
         public Character()
             : base()
@@ -56,12 +58,14 @@ namespace OeilNoir
             this._Job = new Profession();
             this._Competences = new List<Competence>();
             this._CreationLevel = new StartLevel();
+            List<Advantage> _Advantages = new List<Advantage>();
+            List<Disadvantage> _Disadvantages = new List<Disadvantage>();
         }
 
-        public Character(People people, StartLevel lvl)
+        public Character(People people, StartLevel lvl, List<Quality> qual)
             : base(people)
         {
-            this._Qualities = new List<Quality>();
+            this._Qualities = qual;
             this._AT = 0;
             this._PRD = 0;
             this._CD = 0;
@@ -84,15 +88,17 @@ namespace OeilNoir
             this._Competences = new List<Competence>();
             this._CreationLevel = lvl;
             this._CreationLevel.UsePAV(base.GetCost);
+            List<Advantage> _Advantages = new List<Advantage>();
+            List<Disadvantage> _Disadvantages = new List<Disadvantage>();
         }
 
-        public int QualityIncreaseCost(string sigle)
+        protected int QualityIncreaseCost(string sigle)
         {
             for (int i = 0; i < this._Qualities.Count; i++)
             {
                 if (this._Qualities[i].GetSigle == sigle)
                 {
-                    if (this._Qualities[i].GetValue() < this._CreationLevel.GetMaxQualityValue())
+                    if (this._Qualities[i].GetValue() < this._CreationLevel.GetMaxQualityValue)
                     {
                         return this._Qualities[i].Cost();
                     }
@@ -101,19 +107,40 @@ namespace OeilNoir
             return -1;
         }
 
-        public void ModifyQuality(string sigle)
+        public bool ModifyQuality(string sigle)
         {
             for (int i = 0; i < this._Qualities.Count; i++)
             {
                 if (this._Qualities[i].GetSigle == sigle)
                 {
-                    if (this._Qualities[i].GetValue() < this._CreationLevel.GetMaxQualityValue())
+                    if (this._Qualities[i].GetValue() < this._CreationLevel.GetMaxQualityValue && this._CreationLevel.GetMaxQualityPoints > this._Qualities[i].GetValue())
                     {
-                        this._CreationLevel.UseQualityPoint(this._Qualities[i].Cost());
+                        this._CreationLevel.UseQualityPoint(this._Qualities[i].GetValue() + 1);
+                        this._CreationLevel.UsePAV(this._Qualities[i].Cost());
                         this._Qualities[i].ModifyValue(1);
+                        return true;
                     }
                 }
             }
+            return false;
+        }
+
+        public bool DecreaseQuality(string sigle)
+        {
+            for (int i = 0; i < this._Qualities.Count; i++)
+            {
+                if (this._Qualities[i].GetSigle == sigle)
+                {
+                    if (this._Qualities[i].GetValue() > 8)
+                    {
+                        this._Qualities[i].ModifyValue(-1);
+                        this._CreationLevel.AddQualityPoint(this._Qualities[i].GetValue());
+                        this._CreationLevel.AddPAV((this._Qualities[i].GetValue() > 14) ? (this._Qualities[i].Cost() - 15) : (this._Qualities[i].Cost()));
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void ApplyModificators()
@@ -184,7 +211,6 @@ namespace OeilNoir
                     return;
                 }
             }
-            this._Competences.Add(new Competence(comp, val));
         }
 
         public List<Quality> GetQualities()
@@ -202,7 +228,7 @@ namespace OeilNoir
             this._VI = base.GetVI;
         }
 
-        protected int GetQualityValue(string sigle)
+        public int GetQualityValue(string sigle)
         {
             foreach (Quality q in this._Qualities)
             {
@@ -233,6 +259,14 @@ namespace OeilNoir
             }
         }
 
+        public StartLevel GetLevel
+        {
+            get
+            {
+                return this._CreationLevel;
+            }
+        }
+
         public override string ToString()
         {
             string qual = String.Empty;
@@ -253,7 +287,7 @@ namespace OeilNoir
             return String.Format("{0}\t{14}\n{1}\t{11}\n{2} ans\tMain directrice: {3}\n{4}Energie Vitale: {5}\nTenacité Mentale: {6}\nTenacité Physique: {7}\nEsquive: {8}\nInitiative: {9}\nVitesse: {10}\n\n{12}\n\nPAV: {13}",
                                     this._Name, base.GetName, this._Age.ToString(), this._Leading_Hand, qual, this._EV.ToString(),
                                     this._TM.ToString(), this._TP.ToString(), this._Esquive.ToString(), this._Init.ToString(), this._VI.ToString(),
-                                    cult, comp, this._CreationLevel.GetPAV().ToString(), this._Job.GetName());
+                                    cult, comp, this._CreationLevel.GetPAV.ToString(), this._Job.GetName());
         }
     }
 }

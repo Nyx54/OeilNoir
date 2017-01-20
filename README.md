@@ -9,12 +9,9 @@ L'objectif de cette application est de fournir une aide au Maitre de jeu pour cr
 
 # Priorité Haute
 
-- Choisir un niveau d'Aventure
-- Choisir un Peuple
-- Choisir une Culture
 - Choisir une Profession
 - Augmenter ses Qualités
-- Augmentaer ses Talents
+- Augmenter ses Talents
 - Choisir des Avatages/Désavantages
 - Calculs Automatisés
 - Interface Graphique
@@ -32,6 +29,8 @@ L'objectif de cette application est de fournir une aide au Maitre de jeu pour cr
 
 # Diagrames
 
-- MCD
+- Choisir un niveau d'Aventure
+- Choisir un Peuple
+- Choisir une Culture
 
 ```

@@ -25,6 +25,7 @@ namespace OeilNoir
         List<People> _Peoples = new List<People>();
         List<StartLevel> _Levels = new List<StartLevel>();
         List<Culture> _Cultures = new List<Culture>();
+        List<QualityIncrementor> _Qualinc = new List<QualityIncrementor>();
         Character _Char = null;
         public MainWindow()
         {
@@ -139,6 +140,9 @@ namespace OeilNoir
              * */
         }
 
+        /*
+        * Boutons
+        */
         private void BtnCrea_Click(object sender, RoutedEventArgs e)
         {
             CbLevel.Visibility = Visibility.Visible;
@@ -178,6 +182,38 @@ namespace OeilNoir
             foreach (Quality q in _Qualities)
             {
                 Ltv.Items.Add(q);
+            }
+        }
+
+        private void BtnCult_Click(object sender, RoutedEventArgs e)
+        {
+            if (Ltv.Items.Count > 0)
+                Ltv.Items.Clear();
+            GridView gridView = new GridView();
+
+            Ltv.View = gridView;
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Culture",
+                DisplayMemberBinding = new Binding("GetName"),
+                Width = ((Ltv.Width / 5) - 2) * 2
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Coût",
+                DisplayMemberBinding = new Binding("GetCost"),
+                Width = ((Ltv.Width / 5) - 2)
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Bagage Culturel",
+                DisplayMemberBinding = new Binding("GetCulturalBaggage"),
+                Width = ((Ltv.Width / 5) - 2) * 2
+            });
+            // Populate list
+            foreach (Culture c in _Cultures)
+            {
+                Ltv.Items.Add(c);
             }
         }
 
@@ -232,6 +268,76 @@ namespace OeilNoir
             }
         }
 
+        private void BtnLevels_Click(object sender, RoutedEventArgs e)
+        {
+            if (Ltv.Items.Count > 0)
+                Ltv.Items.Clear();
+            GridView gridView = new GridView();
+
+            Ltv.View = gridView;
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Level",
+                DisplayMemberBinding = new Binding("GetName")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Compte PAV",
+                DisplayMemberBinding = new Binding("GetPAV")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Val. Max. Qualité",
+                DisplayMemberBinding = new Binding("GetMaxQualityValue")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Val. Max. Compétence",
+                DisplayMemberBinding = new Binding("GetMaxCompetenceValue")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Val. Max. Technique de Combat",
+                DisplayMemberBinding = new Binding("GetMaxFT")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Nbr. Max points de qualité",
+                DisplayMemberBinding = new Binding("GetMaxQualityPoints")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Nbr. Max de sorts/liturgies",
+                DisplayMemberBinding = new Binding("GetNbSpells")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Dont sorts hors tradition",
+                DisplayMemberBinding = new Binding("GetNbSpellsHT")
+            });
+
+            // Populate list
+            foreach (StartLevel lvl in _Levels)
+            {
+                Ltv.Items.Add(lvl);
+            }
+        }
+
+
+        private void BtnAff_Click(object sender, RoutedEventArgs e)
+        {
+            CharacterSheet _CS = new CharacterSheet(_Char);
+            _CS.ShowDialog();
+       /*     PrintDialog dialog = new PrintDialog();
+            bool? dialogResult = dialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                dialog.PrintVisual(BaseGrid, "test");
+            }*/
+        }
+        /*
+        * Combos
+        */
         private void CbPeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_Char == null)
@@ -240,8 +346,9 @@ namespace OeilNoir
                 while (_Peoples[++i].GetName != CbPeople.SelectedValue.ToString()) ;
                 int j = -1;
                 while (_Levels[++j].GetName != CbLevel.SelectedValue.ToString()) ;
-                _Char = new Character(_Peoples[i], _Levels[j]);
+                _Char = new Character(_Peoples[i], new StartLevel(_Levels[j]), _Qualities);
                 _Char.ApplyModificators();
+                TxtbPav.DataContext = _Char.GetLevel;
                 CbCulture.Visibility = Visibility.Visible;
                 for (int k = 0; k < _Char.GetChoosableCultures.Count; k++)
                 {
@@ -259,43 +366,50 @@ namespace OeilNoir
             }
         }
 
-        private void BtnCult_Click(object sender, RoutedEventArgs e)
-        {
-            if (Ltv.Items.Count > 0)
-                Ltv.Items.Clear();
-            GridView gridView = new GridView();
-
-            Ltv.View = gridView;
-            gridView.Columns.Add(new GridViewColumn
-            {
-                Header = "Culture",
-                DisplayMemberBinding = new Binding("GetName"),
-                Width = ((Ltv.Width / 5) - 2) * 2
-            });
-            gridView.Columns.Add(new GridViewColumn
-            {
-                Header = "Coût",
-                DisplayMemberBinding = new Binding("GetCost"),
-                Width = ((Ltv.Width / 5) - 2)
-            });
-            gridView.Columns.Add(new GridViewColumn
-            {
-                Header = "Bagage Culturel",
-                DisplayMemberBinding = new Binding("GetCulturalBaggage"),
-                Width = ((Ltv.Width / 5) - 2) * 2
-            });
-            // Populate list
-            foreach (Culture c in _Cultures)
-            {
-                Ltv.Items.Add(c);
-            }
-        }
-
         private void CbCulture_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int i = -1;
             while (_Cultures[++i].GetName != CbCulture.SelectedValue.ToString()) ;
             _Char.ChooseCulture(_Cultures[i]);
+
+            foreach (Quality q in _Qualities)
+            {
+                QualityIncrementor qualinc = new QualityIncrementor(q.GetValue(), q.GetSigle, q.GetColor, _Char.GetLevel.GetMaxQualityValue);
+                qualinc.BtnAdd.Click += (source, ev) =>
+                {
+                    try
+                    {
+                        if (_Char.ModifyQuality(q.GetSigle))
+                        {
+                            qualinc.IncValue();
+                            TxtbPav.Text = _Char.GetLevel.GetPAVString;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                };
+                qualinc.BtnDown.Click += (source, ev) =>
+                {
+                    try
+                    {
+                        if (_Char.DecreaseQuality(q.GetSigle))
+                        {
+                            qualinc.DecValue();
+                            TxtbPav.Text = _Char.GetLevel.GetPAVString;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                };
+                StpQual.Children.Add(qualinc);
+                _Qualinc.Add(qualinc);
+            }
         }
+
+ 
     }
 }
