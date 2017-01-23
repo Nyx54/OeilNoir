@@ -59,6 +59,12 @@
     <ChoosableCultures>
 
     </ChoosableCultures>
+	<Advantages>
+
+	</Advantages>
+	<Disadvantages>
+	
+	</Disadvantages>
   </People>
   <People>
     <Name>
@@ -104,6 +110,17 @@
         Elfe des Bois
       </Culture>
     </ChoosableCultures>
+	<Advantages>
+		<Name>
+		Pouvoir magique
+		</Name>
+		<Name>
+		Chant diphonique
+		</Name>
+	</Advantages>
+	<Disadvantages>
+	
+	</Disadvantages>
   </People>
   <People>
     <Name>
@@ -164,6 +181,12 @@
     <ChoosableCultures>
 
     </ChoosableCultures>
+	<Advantages>
+
+	</Advantages>
+	<Disadvantages>
+	
+	</Disadvantages>	
   </People>
   <People>
     <Name>
@@ -207,5 +230,11 @@
     <ChoosableCultures>
 
     </ChoosableCultures>
+	<Advantages>
+
+	</Advantages>
+	<Disadvantages>
+	
+	</Disadvantages>
   </People>
 </Peoples>
