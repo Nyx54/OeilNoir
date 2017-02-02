@@ -5,8 +5,10 @@
         Title="L'Oeil Noir" Height="720" Width="1024" Loaded="Window_Loaded" FontFamily="Times New Roman" FontSize="14" Icon="Pictures/auge_noir.ico">
     <Grid x:Name="BaseGrid">
         <Button x:Name="BtnCrea" Content="Créer un Personnage" HorizontalAlignment="Left" Margin="50,75,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnCrea_Click" />
-        <TextBox x:Name="TxtbPav" HorizontalAlignment="Left" Height="30" Margin="225,75,0,0" TextWrapping="Wrap" Text="{Binding GetPAVString, Mode=OneTime}" VerticalAlignment="Top" Width="80" VerticalContentAlignment="Center" Focusable="False"/>
-        <TextBlock x:Name="TxtblPav" HorizontalAlignment="Left" Margin="333,82,0,0" TextWrapping="Wrap" Text="PAV" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtbPav" HorizontalAlignment="Left" Height="30" Margin="225,75,0,0" TextWrapping="Wrap" Text="{Binding GetPAVString, Mode=OneWay}" VerticalAlignment="Top" Width="80" VerticalContentAlignment="Center" Focusable="False"/>
+        <TextBlock x:Name="TxtblPav" HorizontalAlignment="Left" Margin="315,81,0,0" TextWrapping="Wrap" Text="PAV" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtbQualPtns" HorizontalAlignment="Left" Height="30" Margin="225,125,0,0" TextWrapping="Wrap" Text="{Binding GetQualityPointsString, Mode=OneWay}" VerticalAlignment="Top" Width="80" VerticalContentAlignment="Center" Focusable="False"/>
+        <TextBlock x:Name="TxtblQualPtns" HorizontalAlignment="Left" Margin="315,130,0,0" TextWrapping="Wrap" Text="Points de qualité" VerticalAlignment="Top" RenderTransformOrigin="0.726,1.458"/>
 
         <Button x:Name="BtnQual" Content="Qualités" HorizontalAlignment="Left" Margin="581,45,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnQual_Click" />
         <Button x:Name="BtnCult" Content="Cultures" HorizontalAlignment="Left" Margin="706,45,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnCult_Click" />
@@ -22,5 +24,13 @@
         <ComboBox x:Name="CbCulture" HorizontalAlignment="Left" Margin="24,200,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden" SelectionChanged="CbCulture_SelectionChanged"/>
         <StackPanel x:Name="StpQual" HorizontalAlignment="Left" Height="60" Margin="24,250,0,0" VerticalAlignment="Top" Width="380" Orientation="Horizontal"/>
         <Button x:Name="BtnAff" Content="Afficher" HorizontalAlignment="Left" Margin="333,647,0,0" VerticalAlignment="Top" Width="75" Click="BtnAff_Click"/>
+        <CheckBox x:Name="CkbCulture" Content="Utiliser le bagage culturel" HorizontalAlignment="Left" Margin="175,205,0,0" VerticalAlignment="Top" Visibility="Hidden" Click="CkbCulture_Click"/>
+        <ListView x:Name="LtvComp" HorizontalAlignment="Left" Height="260" Margin="24,329,0,0" VerticalAlignment="Top" Width="380">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

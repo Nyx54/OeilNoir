@@ -27,7 +27,7 @@ namespace OeilNoir
         string _MonthofBirth;
         int _DayofBirth;
         string _Leading_Hand;
-        List<Culture> _Current_Cultures;
+        Culture _Current_Cultures;
         Profession _Job;
         List<Competence> _Competences;
         List<Advantage> _Advantages;
@@ -54,7 +54,7 @@ namespace OeilNoir
             this._MonthofBirth = String.Empty;
             this._DayofBirth = 0;
             this._Leading_Hand = String.Empty;
-            this._Current_Cultures = new List<Culture>();
+            this._Current_Cultures = new Culture();
             this._Job = new Profession();
             this._Competences = new List<Competence>();
             this._CreationLevel = new StartLevel();
@@ -83,7 +83,7 @@ namespace OeilNoir
             this._MonthofBirth = String.Empty;
             this._DayofBirth = 0;
             this._Leading_Hand = "Right";
-            this._Current_Cultures = new List<Culture>();
+            this._Current_Cultures = new Culture();
             this._Job = new Profession();
             this._Competences = new List<Competence>();
             this._CreationLevel = lvl;
@@ -113,9 +113,9 @@ namespace OeilNoir
             {
                 if (this._Qualities[i].GetSigle == sigle)
                 {
-                    if (this._Qualities[i].GetValue() < this._CreationLevel.GetMaxQualityValue && this._CreationLevel.GetMaxQualityPoints > this._Qualities[i].GetValue())
+                    if (this._Qualities[i].GetValue() < this._CreationLevel.GetMaxQualityValue && this._CreationLevel.GetMaxQualityPoints > 0)
                     {
-                        this._CreationLevel.UseQualityPoint(this._Qualities[i].GetValue() + 1);
+                        this._CreationLevel.UseQualityPoint(1);
                         this._CreationLevel.UsePAV(this._Qualities[i].Cost());
                         this._Qualities[i].ModifyValue(1);
                         return true;
@@ -134,7 +134,7 @@ namespace OeilNoir
                     if (this._Qualities[i].GetValue() > 8)
                     {
                         this._Qualities[i].ModifyValue(-1);
-                        this._CreationLevel.AddQualityPoint(this._Qualities[i].GetValue());
+                        this._CreationLevel.AddQualityPoint(1);
                         this._CreationLevel.AddPAV((this._Qualities[i].GetValue() > 14) ? (this._Qualities[i].Cost() - 15) : (this._Qualities[i].Cost()));
                         return true;
                     }
@@ -172,23 +172,18 @@ namespace OeilNoir
 
         }
 
+        public void ApplyCulturalBagage()
+        {
+            this._CreationLevel.UsePAV(this._Current_Cultures.GetCost);
+            foreach (KeyValuePair<string, int> kvp in this._Current_Cultures.GetBaggage)
+            {
+                ModifyComp(kvp.Key, kvp.Value);
+            }
+        }
+
         public void ChooseCulture(Culture culture)
         {
-            foreach (string cult in base.GetChoosableCultures)
-            {
-                if (cult == culture.GetName)
-                {
-                    this._Current_Cultures.Add(culture);
-                    if (this._Current_Cultures.Count > 1)
-                    {
-                        this._CreationLevel.UsePAV(culture.GetCost);
-                    }
-                    foreach (KeyValuePair<string, int> kvp in culture.GetBaggage)
-                    {
-                        ModifyComp(kvp.Key, kvp.Value);
-                    }
-                }
-            }
+            this._Current_Cultures = culture;
         }
 
         public void ChooseProfession(Profession job)
@@ -203,15 +198,31 @@ namespace OeilNoir
 
         protected void ModifyComp(string comp, int val)
         {
+			bool applied = false;
             for (int i = 0; i < this._Competences.Count; i++)
             {
-                if (this._Competences[i].GetName() == comp)
+                if (this._Competences[i].GetName == comp)
                 {
+					applied = true;
                     this._Competences[i].ModifyValue(val);
                     return;
                 }
             }
+			if (!applied)
+			{
+				this._Competences.Add(new Competence(comp, val, 'A'));
+			}
         }
+
+		public void UseBaseQuality()
+		{
+			int qualitycost = 0;
+			foreach (Quality q in this._Qualities)
+			{
+				qualitycost += q.GetValue();
+			}
+			this.GetLevel.UseQualityPoint(qualitycost);
+		}
 
         public List<Quality> GetQualities()
         {
@@ -246,16 +257,11 @@ namespace OeilNoir
         }
 
 
-        public List<string> GetCurrentCultures
+        public string GetCurrentCultures
         {
             get
             {
-                List<string> res = new List<string>();
-                foreach (Culture c in this._Current_Cultures)
-                {
-                    res.Add(c.GetName);
-                }
-                return res;
+                return this._Current_Cultures.GetName;
             }
         }
 
@@ -267,17 +273,20 @@ namespace OeilNoir
             }
         }
 
+		public List<Competence> GetComp
+		{
+			get
+			{
+				return this._Competences;
+			}
+		}
+
         public override string ToString()
         {
             string qual = String.Empty;
             foreach (Quality q in this._Qualities)
             {
                 qual += (q.ToString() + "\n");
-            }
-            string cult = String.Empty;
-            foreach (Culture c in this._Current_Cultures)
-            {
-                cult += (c.GetName + "\t");
             }
             string comp = String.Empty;
             foreach (Competence cp in this._Competences)
@@ -287,7 +296,7 @@ namespace OeilNoir
             return String.Format("{0}\t{14}\n{1}\t{11}\n{2} ans\tMain directrice: {3}\n{4}Energie Vitale: {5}\nTenacité Mentale: {6}\nTenacité Physique: {7}\nEsquive: {8}\nInitiative: {9}\nVitesse: {10}\n\n{12}\n\nPAV: {13}",
                                     this._Name, base.GetName, this._Age.ToString(), this._Leading_Hand, qual, this._EV.ToString(),
                                     this._TM.ToString(), this._TP.ToString(), this._Esquive.ToString(), this._Init.ToString(), this._VI.ToString(),
-                                    cult, comp, this._CreationLevel.GetPAV.ToString(), this._Job.GetName());
+                                    this._Current_Cultures.GetName, comp, this._CreationLevel.GetPAV.ToString(), this._Job.GetName());
         }
     }
 }

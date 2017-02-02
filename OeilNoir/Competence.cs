@@ -26,12 +26,23 @@ namespace OeilNoir
             this._Facteur_Amelioration = fa;
         }
 
-        public string GetName()
+        public string GetName
         {
-            return this._Name;
+			get
+			{
+				return this._Name;
+			}
         }
 
-        public void ModifyValue(int val)
+		public int GetValue
+		{
+			get
+			{
+				return this._Value;
+			}
+		}
+
+		public void ModifyValue(int val)
         {
             this._Value += val;
         }

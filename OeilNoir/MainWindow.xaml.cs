@@ -119,25 +119,6 @@ namespace OeilNoir
                     _Peoples.Add(p);
                 }
             }
-
-
-            /*
-            Dictionary<string, int> BardeComp = new Dictionary<string, int>();
-            BardeComp.Add("Chant", 1);
-            BardeComp.Add("Musique", 2);
-            List<Profession> Jobs = new List<Profession>	{ 
-                                        new Profession(157, "Barde", BardeComp),
-                                        new Profession(263, "Chasseur", new Dictionary<string, int> ())
-                                    };
-            Character c = new Character("Elfe");
-            c.ApplyModificators();
-            c.ChooseQualityModificator("FO");
-            c.ChooseCulture("Elf des Bois");
-            c.ChooseProfession(Jobs[0]);
-            c.BaseValues();
-            c.ChooseName("Aby-Gaëlle");
-            MessageBox.Show(c.ToString());
-             * */
         }
 
         /*
@@ -207,8 +188,7 @@ namespace OeilNoir
             gridView.Columns.Add(new GridViewColumn
             {
                 Header = "Bagage Culturel",
-                DisplayMemberBinding = new Binding("GetCulturalBaggage"),
-                Width = ((Ltv.Width / 5) - 2) * 2
+                DisplayMemberBinding = new Binding("GetCulturalBaggage")
             });
             // Populate list
             foreach (Culture c in _Cultures)
@@ -335,6 +315,8 @@ namespace OeilNoir
                 dialog.PrintVisual(BaseGrid, "test");
             }*/
         }
+
+
         /*
         * Combos
         */
@@ -348,9 +330,12 @@ namespace OeilNoir
                 while (_Levels[++j].GetName != CbLevel.SelectedValue.ToString()) ;
                 _Char = new Character(_Peoples[i], new StartLevel(_Levels[j]), _Qualities);
                 _Char.ApplyModificators();
-                TxtbPav.DataContext = _Char.GetLevel;
-                CbCulture.Visibility = Visibility.Visible;
-                for (int k = 0; k < _Char.GetChoosableCultures.Count; k++)
+				_Char.UseBaseQuality();
+				TxtbPav.DataContext = _Char.GetLevel;
+				TxtbQualPtns.DataContext = _Char.GetLevel;
+				CbCulture.Visibility = Visibility.Visible;
+				CkbCulture.Visibility = Visibility.Visible;	
+				for (int k = 0; k < _Char.GetChoosableCultures.Count; k++)
                 {
                     CbCulture.Items.Add(_Char.GetChoosableCultures[k]);
                 }
@@ -364,7 +349,7 @@ namespace OeilNoir
             {
                 CbPeople.Items.Add(p.GetName);
             }
-        }
+		}
 
         private void CbCulture_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -383,7 +368,8 @@ namespace OeilNoir
                         {
                             qualinc.IncValue();
                             TxtbPav.Text = _Char.GetLevel.GetPAVString;
-                        }
+							TxtbQualPtns.Text = _Char.GetLevel.GetQualityPointsString;
+						}
                     }
                     catch (Exception ex)
                     {
@@ -398,7 +384,8 @@ namespace OeilNoir
                         {
                             qualinc.DecValue();
                             TxtbPav.Text = _Char.GetLevel.GetPAVString;
-                        }
+							TxtbQualPtns.Text = _Char.GetLevel.GetQualityPointsString;
+						}
                     }
                     catch (Exception ex)
                     {
@@ -410,6 +397,47 @@ namespace OeilNoir
             }
         }
 
- 
-    }
+		/*
+		* CheckBox
+		*/
+
+		private void CkbCulture_Click(object sender, RoutedEventArgs e)
+		{
+			if (CkbCulture.IsChecked == true)
+			{
+				this._Char.ApplyCulturalBagage();
+				TxtbPav.Text = _Char.GetLevel.GetPAVString;
+				AffCharComp();
+			}
+		}
+
+		/*
+		*
+		*/
+		public void AffCharComp()
+		{
+			if (LtvComp.Items.Count > 0)
+				LtvComp.Items.Clear();
+			GridView gridView = new GridView();
+
+			LtvComp.View = gridView;
+			gridView.Columns.Add(new GridViewColumn
+			{
+				Header = "Compétence",
+				DisplayMemberBinding = new Binding("GetName"),
+				Width = ((LtvComp.Width / 4) - 2) * 3
+			});
+			gridView.Columns.Add(new GridViewColumn
+			{
+				Header = "Niveau",
+				DisplayMemberBinding = new Binding("GetValue"),
+				Width = ((LtvComp.Width / 4) - 5)
+			});
+			// Populate list
+			foreach (Competence c in this._Char.GetComp)
+			{
+				LtvComp.Items.Add(c);
+			}
+		}
+	}
 }

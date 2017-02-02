@@ -106,7 +106,15 @@ namespace OeilNoir
                 return this._Nb_Qualities_Points;
             }
         }
-        public int GetNbSpells
+
+		public string GetQualityPointsString
+		{
+			get
+			{
+				return this._Nb_Qualities_Points.ToString();
+			}
+		}
+		public int GetNbSpells
         {
             get
             {
