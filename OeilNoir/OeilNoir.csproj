@@ -57,6 +57,9 @@
     <Compile Include="CharacterSheet.xaml.cs">
       <DependentUpon>CharacterSheet.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChooseQuality.xaml.cs">
+      <DependentUpon>ChooseQuality.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Competence.cs" />
     <Compile Include="Disadvantage.cs" />
     <Compile Include="Quality.cs" />
@@ -71,6 +74,10 @@
     <Compile Include="SpecialCapacity.cs" />
     <Compile Include="StartLevel.cs" />
     <Page Include="CharacterSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChooseQuality.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

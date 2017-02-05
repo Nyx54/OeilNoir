@@ -339,6 +339,16 @@ namespace OeilNoir
                 {
                     CbCulture.Items.Add(_Char.GetChoosableCultures[k]);
                 }
+
+                if (_Peoples[i].GetChoosableModificators != null)
+                {
+                    ChooseQuality _ChooseQual = new ChooseQuality(_Peoples[i].GetChoosableModificators);
+                    _ChooseQual.ShowDialog();
+                    if (_ChooseQual.DialogResult == true)
+                    {
+                        _Char.ChooseQualityModificator(_ChooseQual.ReturnValue);
+                    }
+                }
             }
         }
 
