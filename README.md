@@ -10,7 +10,6 @@ L'objectif de cette application est de fournir une aide au Maitre de jeu pour cr
 # Priorité Haute
 
 - Choisir une Profession
-- Augmenter ses Qualités
 - Augmenter ses Talents
 - Choisir des Avatages/Désavantages
 - Calculs Automatisés
@@ -25,12 +24,8 @@ L'objectif de cette application est de fournir une aide au Maitre de jeu pour cr
 
 ### Done
 
-```markdown
-
-# Diagrames
-
 - Choisir un niveau d'Aventure
 - Choisir un Peuple
 - Choisir une Culture
+- Augmenter ses Qualités
 
-```
