@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Competence.cs" />
     <Compile Include="Disadvantage.cs" />
+    <Compile Include="Factor.cs" />
     <Compile Include="Quality.cs" />
     <Compile Include="DataResources.Designer.cs">
       <AutoGen>True</AutoGen>

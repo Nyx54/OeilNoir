@@ -26,7 +26,9 @@ namespace OeilNoir
         List<StartLevel> _Levels = new List<StartLevel>();
         List<Culture> _Cultures = new List<Culture>();
         List<QualityIncrementor> _Qualinc = new List<QualityIncrementor>();
+		Dictionary<char, List<int>> _FacteurAmelioration = new Dictionary<char, List<int>>();
         Character _Char = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -119,6 +121,11 @@ namespace OeilNoir
                     _Peoples.Add(p);
                 }
             }
+
+			/*
+			* Tableau des facteurs d'amélioration
+			*/
+			Calc_FA();
         }
 
         /*
@@ -316,11 +323,71 @@ namespace OeilNoir
             }*/
         }
 
+		private void BtnFA_Click(object sender, RoutedEventArgs e)
+		{
+			if (Ltv.Items.Count > 0)
+				Ltv.Items.Clear();
+			GridView gridView = new GridView();
 
-        /*
+			Ltv.View = gridView;
+			gridView.Columns.Add(new GridViewColumn
+			{
+				Header = "Niveau visé",
+				DisplayMemberBinding = new Binding("GetLevel"),
+				Width = ((Ltv.Width / 7) - 10) * 2
+			});
+			gridView.Columns.Add(new GridViewColumn
+			{
+				Header = "A",
+				DisplayMemberBinding = new Binding("GetAValue"),
+				Width = ((Ltv.Width / 7) - 2)
+			});
+			gridView.Columns.Add(new GridViewColumn
+			{
+				Header = "B",
+				DisplayMemberBinding = new Binding("GetBValue"),
+				Width = ((Ltv.Width / 7) - 2)
+			});
+			gridView.Columns.Add(new GridViewColumn
+			{
+				Header = "C",
+				DisplayMemberBinding = new Binding("GetCValue"),
+				Width = ((Ltv.Width / 7) - 2)
+			});
+			gridView.Columns.Add(new GridViewColumn
+			{
+				Header = "D",
+				DisplayMemberBinding = new Binding("GetDValue"),
+				Width = ((Ltv.Width / 7) - 2)
+			});
+			gridView.Columns.Add(new GridViewColumn
+			{
+				Header = "E",
+				DisplayMemberBinding = new Binding("GetEValue"),
+				Width = ((Ltv.Width / 7) - 2)
+			});
+
+			// Populate list
+			for (int i = 0; i <= 25; i++)
+			{
+				string level = "";
+				if (i == 0)
+				{
+					level = "Activation à 0";
+				}
+				else
+				{
+					level = "Niveau " + i.ToString();
+				}
+				Factor fa = new Factor (level, new List<int>() { _FacteurAmelioration['A'][i], _FacteurAmelioration['B'][i], _FacteurAmelioration['C'][i], _FacteurAmelioration['D'][i], _FacteurAmelioration['E'][i] });
+				Ltv.Items.Add(fa);
+			}
+		}
+
+		/*
         * Combos
         */
-        private void CbPeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void CbPeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_Char == null)
             {
@@ -424,6 +491,74 @@ namespace OeilNoir
 		/*
 		*
 		*/
+		public List<int> Create_FA(char c)
+		{
+			List<int> res = new List<int>();
+			int mul = 1;
+			switch (c)
+			{
+				case 'A':
+					mul = 1;
+					break;
+				case 'B':
+					mul = 2;
+					break;
+				case 'C':
+					mul = 3;
+					break;
+				case 'D':
+					mul = 4;
+					break;
+				case 'E':
+					mul = 15;
+					break;
+			}
+			for (int i = 0; i <= 25; i++)
+			{
+				if (c != 'E')
+				{
+					if (i <= 12)
+					{
+						res.Add(mul);
+					}
+					else
+					{
+						res.Add((i - 11) * mul);
+					}
+				}
+				else
+				{
+					if (i == 0)
+					{
+						res.Add(-1);
+					}
+					else if (i <= 14)
+					{
+						res.Add(mul);
+					}
+					else
+					{
+						res.Add(mul * (i - 13));
+					}
+				}
+			}
+			return res;
+		}
+
+		public void Calc_FA()
+		{
+			List<int> FAa = Create_FA('A');
+			List<int> FAb = Create_FA('B');
+			List<int> FAc = Create_FA('C');
+			List<int> FAd = Create_FA('D');
+			List<int> FAe = Create_FA('E');
+			_FacteurAmelioration.Add('A', FAa);
+			_FacteurAmelioration.Add('B', FAb);
+			_FacteurAmelioration.Add('C', FAc);
+			_FacteurAmelioration.Add('D', FAd);
+			_FacteurAmelioration.Add('E', FAe);
+		}
+
 		public void AffCharComp()
 		{
 			if (LtvComp.Items.Count > 0)

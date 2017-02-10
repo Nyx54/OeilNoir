@@ -196,7 +196,7 @@ namespace OeilNoir
             }
         }
 
-        protected void ModifyComp(string comp, int val)
+        protected void ModifyComp(string comp, int val, char fa = 'A')
         {
 			bool applied = false;
             for (int i = 0; i < this._Competences.Count; i++)
@@ -210,7 +210,7 @@ namespace OeilNoir
             }
 			if (!applied)
 			{
-				this._Competences.Add(new Competence(comp, val, 'A'));
+				this._Competences.Add(new Competence(comp, val, fa));
 			}
         }
 

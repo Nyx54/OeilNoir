@@ -10,6 +10,7 @@
         <TextBox x:Name="TxtbQualPtns" HorizontalAlignment="Left" Height="30" Margin="225,125,0,0" TextWrapping="Wrap" Text="{Binding GetQualityPointsString, Mode=OneWay}" VerticalAlignment="Top" Width="80" VerticalContentAlignment="Center" Focusable="False"/>
         <TextBlock x:Name="TxtblQualPtns" HorizontalAlignment="Left" Margin="315,130,0,0" TextWrapping="Wrap" Text="Points de qualité" VerticalAlignment="Top" RenderTransformOrigin="0.726,1.458"/>
 
+        <Button x:Name="BtnFA" Content="FA Compétences" HorizontalAlignment="Left" Margin="456,45,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnFA_Click" />
         <Button x:Name="BtnQual" Content="Qualités" HorizontalAlignment="Left" Margin="581,45,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnQual_Click" />
         <Button x:Name="BtnCult" Content="Cultures" HorizontalAlignment="Left" Margin="706,45,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnCult_Click" />
         <Button x:Name="BtnPeo" Content="Peuples" HorizontalAlignment="Left" Margin="611,75,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="BtnPeo_Click" />
