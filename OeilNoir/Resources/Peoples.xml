@@ -57,7 +57,60 @@
       </Quality>
     </ChoosableQualities>
     <ChoosableCultures>
-
+      <Culture>
+        Andergastien
+      </Culture>
+      <Culture>
+        Aranien
+      </Culture>
+      <Culture>
+        Aventurien du Nord
+      </Culture>
+      <Culture>
+        Aventurien du Sud
+      </Culture>
+      <Culture>
+        Cyclopéen
+      </Culture>
+      <Culture>
+        Fjarning
+      </Culture>
+      <Culture>
+        Horasien
+      </Culture>
+      <Culture>
+        Impérial
+      </Culture>
+      <Culture>
+        Maraskanite
+      </Culture>
+      <Culture>
+        Mhanadistani
+      </Culture>
+      <Culture>
+        Moha
+      </Culture>
+      <Culture>
+        Nivèse
+      </Culture>
+      <Culture>
+        Norbard
+      </Culture>
+      <Culture>
+        Nostrien
+      </Culture>
+      <Culture>
+        Novadi
+      </Culture>
+      <Culture>
+        Sourcelandais
+      </Culture>
+      <Culture>
+        Thorvalois
+      </Culture>
+      <Culture>
+        Val-Sveltois
+      </Culture>
     </ChoosableCultures>
 	<Advantages>
 
@@ -108,6 +161,12 @@
     <ChoosableCultures>
       <Culture>
         Elfe des Bois
+      </Culture>
+      <Culture>
+        Elfe des Névés
+      </Culture>
+      <Culture>
+        Elfe des Prairies
       </Culture>
     </ChoosableCultures>
 	<Advantages>
@@ -228,7 +287,18 @@
       </Quality>
     </ChoosableQualities>
     <ChoosableCultures>
-
+      <Culture>
+        Archinain  
+      </Culture>
+      <Culture>
+        Nain de Diamant
+      </Culture>
+      <Culture>
+        Nain de l'Enclume
+      </Culture>
+      <Culture>
+        Nain des Collines
+      </Culture>
     </ChoosableCultures>
 	<Advantages>
 
